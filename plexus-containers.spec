@@ -14,7 +14,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        1.5.5
-Release:        14.19%{?dist}
+Release:        14.20%{?dist}
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            http://plexus.codehaus.org/
@@ -101,6 +101,10 @@ cp %{SOURCE2} plexus-component-annotations/build.xml
 # For Maven 3 compat
 %pom_add_dep org.apache.maven:maven-core plexus-component-metadata
 
+# Classpath hell, ASM 3 must be on classpath before ASM 5
+%pom_remove_dep asm:asm plexus-component-metadata
+%pom_add_dep asm:asm:3.1 plexus-component-metadata
+
 # Remove dependency on system-scoped tools.jar
 %pom_remove_dep com.sun:tools plexus-component-javadoc
 %pom_add_dep com.sun:tools plexus-component-javadoc
@@ -153,6 +157,9 @@ set -e -x
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Jan 12 2016 Mikolaj Izdebski <mizdebsk@redhat.com> - 1.5.5-14.20
+- Change dependency order to fix ASM classpath problem
+
 * Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 1.5.5-14.19
 - maven33 rebuild #2
 
