@@ -14,7 +14,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        1.5.5
-Release:        14.18%{?dist}
+Release:        14.19%{?dist}
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            http://plexus.codehaus.org/
@@ -31,21 +31,21 @@ Patch0:         0001-Fix-test-oom.patch
 BuildArch:      noarch
 
 BuildRequires:  %{?scl_prefix_java_common}maven-local
-BuildRequires:  maven30-maven-invoker-plugin
-BuildRequires:  maven30-maven-javadoc-plugin = %{javadoc_plugin_version}
-BuildRequires:  maven30-maven-resources-plugin
-BuildRequires:  maven30-maven-site-plugin
-BuildRequires:  maven30-maven-invoker
-BuildRequires:  maven30-maven-release
-BuildRequires:  maven30-maven-plugin-plugin
-BuildRequires:  maven30-plexus-classworlds
-BuildRequires:  maven30-plexus-utils
-BuildRequires:  maven30-plexus-cli
+BuildRequires:  %{?scl_prefix}maven-invoker-plugin
+BuildRequires:  %{?scl_prefix}maven-javadoc-plugin = %{javadoc_plugin_version}
+BuildRequires:  %{?scl_prefix}maven-resources-plugin
+BuildRequires:  %{?scl_prefix}maven-site-plugin
+BuildRequires:  %{?scl_prefix}maven-invoker
+BuildRequires:  %{?scl_prefix}maven-release
+BuildRequires:  %{?scl_prefix}maven-plugin-plugin
+BuildRequires:  %{?scl_prefix}plexus-classworlds
+BuildRequires:  %{?scl_prefix}plexus-utils
+BuildRequires:  %{?scl_prefix}plexus-cli
 BuildRequires:  %{?scl_prefix_java_common}xbean
 BuildRequires:  %{?scl_prefix_java_common}guava
 
-Requires:       maven30-plexus-classworlds >= 2.2.3
-Requires:       maven30-plexus-utils
+Requires:       %{?scl_prefix}plexus-classworlds >= 2.2.3
+Requires:       %{?scl_prefix}plexus-utils
 Requires:       %{?scl_prefix_java_common}xbean
 Requires:       %{?scl_prefix_java_common}guava
 
@@ -90,7 +90,7 @@ Summary:        API documentation for all plexus-containers packages
 
 %prep
 %setup -q -n plexus-containers-%{version}
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 
 cp %{SOURCE1} plexus-container-default/build.xml
@@ -119,13 +119,13 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %{?scl:EOF}
 
 %build
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_build -f -s
 %{?scl:EOF}
 
 %install
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_install
 
@@ -153,6 +153,9 @@ set -e -x
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 1.5.5-14.19
+- maven33 rebuild #2
+
 * Sat Jan 09 2016 Michal Srb <msrb@redhat.com> - 1.5.5-14.18
 - maven33 rebuild
 
