@@ -14,7 +14,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        1.5.5
-Release:        14.20%{?dist}
+Release:        14.21%{?dist}
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            http://plexus.codehaus.org/
@@ -27,6 +27,8 @@ Source2:        plexus-component-annotations-build.xml
 Source3:        plexus-containers-settings.xml
 
 Patch0:         0001-Fix-test-oom.patch
+Patch1:         0002-Update-to-Plexus-Classworlds-2.5.patch
+Patch2:         0003-Port-to-objectweb-asm-5.patch
 
 BuildArch:      noarch
 
@@ -43,6 +45,7 @@ BuildRequires:  %{?scl_prefix}plexus-utils
 BuildRequires:  %{?scl_prefix}plexus-cli
 BuildRequires:  %{?scl_prefix_java_common}xbean
 BuildRequires:  %{?scl_prefix_java_common}guava
+BuildRequires:  %{?scl_prefix_java_common}objectweb-asm5
 
 Requires:       %{?scl_prefix}plexus-classworlds >= 2.2.3
 Requires:       %{?scl_prefix}plexus-utils
@@ -97,13 +100,11 @@ cp %{SOURCE1} plexus-container-default/build.xml
 cp %{SOURCE2} plexus-component-annotations/build.xml
 
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 # For Maven 3 compat
 %pom_add_dep org.apache.maven:maven-core plexus-component-metadata
-
-# Classpath hell, ASM 3 must be on classpath before ASM 5
-%pom_remove_dep asm:asm plexus-component-metadata
-%pom_add_dep asm:asm:3.1 plexus-component-metadata
 
 # Remove dependency on system-scoped tools.jar
 %pom_remove_dep com.sun:tools plexus-component-javadoc
@@ -157,6 +158,9 @@ set -e -x
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Jan 20 2016 Michal Srb <msrb@redhat.com> - 1.5.5-14.21
+- Apply patches from Fedora (port to plexus-classworlds 2.5 and asm5)
+
 * Tue Jan 12 2016 Mikolaj Izdebski <mizdebsk@redhat.com> - 1.5.5-14.20
 - Change dependency order to fix ASM classpath problem
 
