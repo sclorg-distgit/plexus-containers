@@ -14,7 +14,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        1.5.5
-Release:        14.21%{?dist}
+Release:        14.22%{?dist}
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            http://plexus.codehaus.org/
@@ -32,7 +32,7 @@ Patch2:         0003-Port-to-objectweb-asm-5.patch
 
 BuildArch:      noarch
 
-BuildRequires:  %{?scl_prefix_java_common}maven-local
+BuildRequires:  %{?scl_prefix}maven-local
 BuildRequires:  %{?scl_prefix}maven-invoker-plugin
 BuildRequires:  %{?scl_prefix}maven-javadoc-plugin = %{javadoc_plugin_version}
 BuildRequires:  %{?scl_prefix}maven-resources-plugin
@@ -158,6 +158,9 @@ set -e -x
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Michal Srb <msrb@redhat.com> - 1.5.5-14.22
+- Fix BR on maven-local & co.
+
 * Wed Jan 20 2016 Michal Srb <msrb@redhat.com> - 1.5.5-14.21
 - Apply patches from Fedora (port to plexus-classworlds 2.5 and asm5)
 
