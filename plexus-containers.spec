@@ -3,7 +3,7 @@
 
 Name:           %{?scl_prefix}plexus-containers
 Version:        1.7.1
-Release:        2.1%{?dist}
+Release:        2.2%{?dist}
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
@@ -148,6 +148,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jun 22 2017 Michael Simacek <msimacek@redhat.com> - 1.7.1-2.2
+- Mass rebuild 2017-06-22
+
 * Wed Jun 21 2017 Java Maintainers <java-maint@redhat.com> - 1.7.1-2.1
 - Automated package import and SCL-ization
 
